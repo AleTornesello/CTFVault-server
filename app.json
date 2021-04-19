@@ -1,0 +1,7 @@
+{
+  "name": "CTFVault",
+  "description": "A simple search-oriented CTF writeups container",
+  "repository": "https://github.com/AleTornesello/CTFVault-server",
+  "keywords": ["node", "express", "heroku", "ctf"],
+  "image": "heroku/nodejs"
+}
