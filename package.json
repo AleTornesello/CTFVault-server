@@ -1,0 +1,24 @@
+{
+  "name": "ctfvault-server",
+  "version": "0.0.1",
+  "description": "A simple search-oriented CTF writeups container",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon src/app.js --exec npm run lint --exec node",
+    "start": "node src/app.js",
+    "lint": "eslint **/*.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^7.24.0",
+    "nodemon": "^2.0.7"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "firebase": "^8.4.1",
+    "morgan": "^1.10.0"
+  }
+}
