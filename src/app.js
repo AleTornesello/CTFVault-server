@@ -19,6 +19,7 @@ app.use(cors());
 
 // Routes
 app.use("/ctf", require('./routes/ctfRoute'))
+app.use("/writeups", require('./routes/writeupRoute'))
 
 console.log(`Listening on port ${process.env.PORT || 8081}`);
 app.listen(process.env.PORT || 8081);
