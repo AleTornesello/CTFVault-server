@@ -3,7 +3,7 @@ import express from "express"
 import cors from "cors"
 import mongoose from "mongoose"
 
-import morganMiddleware from './middlewares/morganMiddleware'
+import { morganMiddleware, notFoundMiddleware, logErrorMiddleware, errorHandlerMiddleware } from './middlewares'
 import Logger from "./helpers/logger"
 import * as routes from "./routes";
 
@@ -30,6 +30,10 @@ app.use(cors());
 
 // Routes
 routes.register(app);
+
+app.use(notFoundMiddleware)
+app.use(logErrorMiddleware);
+app.use(errorHandlerMiddleware);
 
 app.listen(port, () => {
   Logger.debug(`server started at http://localhost:${port}`);

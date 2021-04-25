@@ -1,10 +1,11 @@
-import { Response } from "express";
+import { Response, NextFunction } from "express";
 import crypto from "crypto"
-import HTTP_STATUS_CODE from "../../helpers/httpStatusCode"
+import createHttpError from "http-errors"
+import { HTTP_STATUS_CODE } from "../../helpers"
 
 const SHA256_HEADER = 'x-hub-signature-256';
 
-function githubIntegrityCheckMiddleware(request: any, response: Response, next: any) {
+function githubIntegrityCheckMiddleware(request: any, response: Response, next: NextFunction): void {
   if (request.headers[SHA256_HEADER]) {
     const sha256Signature: string = request.headers[SHA256_HEADER].replace('sha256=', '');
 
@@ -15,10 +16,10 @@ function githubIntegrityCheckMiddleware(request: any, response: Response, next: 
     if (sha256Signature === bodySha256) {
       next();
     } else {
-      return response.status(HTTP_STATUS_CODE.UNAUTHORIZED).json({ error: 'Invalid signature' });
+      throw createHttpError(HTTP_STATUS_CODE.UNAUTHORIZED, 'Invalid signature');
     }
   } else {
-    return response.status(HTTP_STATUS_CODE.BAD_REQUEST).json({ error: 'Missing signature' });
+    throw createHttpError(HTTP_STATUS_CODE.BAD_REQUEST, 'Missing signature');
   }
 }
 

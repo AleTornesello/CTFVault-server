@@ -1,4 +1,6 @@
 import { Application, Router } from "express";
+import expressAsyncHandler from "express-async-handler";
+
 import { HTTP_STATUS_CODE, Logger } from "../../helpers";
 import { githubIntegrityCheckMiddleware } from "../../middlewares";
 import GithubHooksController from '../../controllers/githubHooksController';
@@ -19,6 +21,5 @@ export const register = (app: Application, basePath: string) => {
     }
   })
 
-  router.post('/push', GithubHooksController.push);
-  router.post('/issues', GithubHooksController.issues);
+  router.post('/push', expressAsyncHandler(GithubHooksController.push));
 };
