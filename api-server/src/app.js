@@ -14,12 +14,17 @@ mongoose.connect(mongoUri)
 
 const app = express();
 app.use(morgan("combined"));
-app.use(express.json());
+app.use(express.json({
+  verify: (req, res, buf) => {
+    req.rawBody = buf
+  }
+}));
 app.use(cors());
 
 // Routes
 app.use("/ctfs", require('./routes/ctfRoute'))
 app.use("/writeups", require('./routes/writeupRoute'))
+app.use("/github/hooks", require('./routes/github/hooksRoute'))
 
-console.log(`Listening on port 8080`);
-app.listen(8080);
+console.log(`Listening on port ${process.env.PORT || 8080}`);
+app.listen(process.env.PORT || 8080);
