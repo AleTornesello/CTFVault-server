@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 
-class GithubHooksController {
+class GithubController {
   async push(req: Request, res: Response) {
     return res.json(req.body);
   }
@@ -10,5 +10,5 @@ class GithubHooksController {
   }
 }
 
-const githubHooksController = new GithubHooksController();
-export default githubHooksController;
+const githubController = new GithubController();
+export default githubController;

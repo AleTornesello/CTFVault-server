@@ -23,4 +23,4 @@ function githubIntegrityCheckMiddleware(request: any, response: Response, next: 
   }
 }
 
-export default githubIntegrityCheckMiddleware;
+export { githubIntegrityCheckMiddleware };
