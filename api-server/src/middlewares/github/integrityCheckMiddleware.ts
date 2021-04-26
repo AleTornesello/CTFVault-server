@@ -1,10 +1,10 @@
-import { Response, NextFunction } from "express";
 import crypto from "crypto"
-import createHttpError from "http-errors"
-import { HTTP_STATUS_CODE } from "../../helpers"
+import { Response, NextFunction } from "express";
+import { BadRequest, Unauthorized } from "http-errors";
 
 const SHA256_HEADER = 'x-hub-signature-256';
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 function githubIntegrityCheckMiddleware(request: any, response: Response, next: NextFunction): void {
   if (request.headers[SHA256_HEADER]) {
     const sha256Signature: string = request.headers[SHA256_HEADER].replace('sha256=', '');
@@ -16,10 +16,10 @@ function githubIntegrityCheckMiddleware(request: any, response: Response, next: 
     if (sha256Signature === bodySha256) {
       next();
     } else {
-      throw createHttpError(HTTP_STATUS_CODE.UNAUTHORIZED, 'Invalid signature');
+      throw new Unauthorized('Invalid signature');
     }
   } else {
-    throw createHttpError(HTTP_STATUS_CODE.BAD_REQUEST, 'Missing signature');
+    throw new BadRequest('Missing signature');
   }
 }
 

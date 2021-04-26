@@ -1,11 +1,12 @@
+import { BadRequest } from 'http-errors';
 import { Application, Router } from "express";
 import expressAsyncHandler from "express-async-handler";
 
-import { HTTP_STATUS_CODE, Logger } from "../../helpers";
+import { Logger } from "../../helpers";
 import { githubIntegrityCheckMiddleware } from "../../middlewares";
 import GithubHooksController from '../../controllers/githubHooksController';
 
-export const register = (app: Application, basePath: string) => {
+export const register = (app: Application, basePath: string): void => {
   const router = Router();
   app.use(basePath, router)
 
@@ -17,7 +18,7 @@ export const register = (app: Application, basePath: string) => {
       Logger.debug(`Redirect Github Webhooks request to route ${req.url}`);
       next();
     } else {
-      return res.status(HTTP_STATUS_CODE.BAD_REQUEST).json({ error: 'Missing Github event' });
+      return new BadRequest('Missing Github event');
     }
   })
 

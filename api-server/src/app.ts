@@ -3,7 +3,8 @@ import express from "express"
 import cors from "cors"
 import mongoose from "mongoose"
 
-import { morganMiddleware, notFoundMiddleware, logErrorMiddleware, errorHandlerMiddleware } from './middlewares'
+import { morganMiddleware } from './middlewares'
+import { notFoundMiddleware, logErrorMiddleware, errorHandlerMiddleware } from './errors';
 import Logger from "./helpers/logger"
 import * as routes from "./routes";
 
