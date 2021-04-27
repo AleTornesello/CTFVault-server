@@ -20,13 +20,9 @@ mongoose.connect(mongoUri)
 const port = process.env.SERVER_PORT || 8080;
 
 const app = express();
-// app.use(morgan("combined"));
+
 app.use(morganMiddleware);
-app.use(express.json({
-  verify: (req: any, res, buf) => {
-    req.rawBody = buf;
-  }
-}));
+app.use(express.json());
 app.use(cors());
 
 // Routes
