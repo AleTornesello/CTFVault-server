@@ -3,10 +3,13 @@ import { BadRequest } from 'http-errors';
 import { Webhooks } from '@octokit/webhooks';
 
 import { Logger } from '../helpers';
-import { GithubEventRepository } from './githubEventRepository';
-import { GithubEvent } from './models/githubEvent';
+import { GithubEventRepository } from './repositories/githubEventRepository';
+import { GithubEvent, GithubEventStatus } from './models/githubEvent';
 
-function createGithubEventsMiddleware(webhooks: Webhooks, subscribedEvents: string[], githubEventRepository: GithubEventRepository): RequestHandler {
+
+const githubEventRepository = new GithubEventRepository();
+
+function createGithubEventsMiddleware(webhooks: Webhooks, subscribedEvents: string[]): RequestHandler {
   return (request: Request, response: Response, next: NextFunction) => {
     const eventId = request.headers["x-github-delivery"] as string;
     if (!eventId) next(new BadRequest('Missing Github delivery'));
@@ -16,7 +19,7 @@ function createGithubEventsMiddleware(webhooks: Webhooks, subscribedEvents: stri
 
     if (!subscribedEvents.includes(eventName)) next(new BadRequest('Github event not supported'));
 
-    const event: GithubEvent = { id: eventId, type: eventName, data: request.body };
+    const event: GithubEvent = { id: eventId, type: eventName, status: GithubEventStatus.Pending, data: request.body };
     githubEventRepository.add(event);
 
     // Send response to github before proceding or it will raise timeout.
