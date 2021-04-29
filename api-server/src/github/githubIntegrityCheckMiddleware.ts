@@ -1,26 +1,18 @@
-import crypto from "crypto"
-import { Response, NextFunction } from "express";
+import { Request, Response, NextFunction, RequestHandler } from "express";
 import { BadRequest, Unauthorized } from "http-errors";
+import { Webhooks } from '@octokit/webhooks';
 
-const SHA256_HEADER = 'x-hub-signature-256';
+function createGithubIntegrityCheckMiddleware(webhooks: Webhooks): RequestHandler {
+  return (request: Request, response: Response, next: NextFunction) => {
+    const signature = request.headers['x-hub-signature-256'] as string;
+    if (!signature) next(new BadRequest('Missing signature'));
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-function githubIntegrityCheckMiddleware(request: any, response: Response, next: NextFunction): void {
-  if (request.headers[SHA256_HEADER]) {
-    const sha256Signature: string = request.headers[SHA256_HEADER].replace('sha256=', '');
-
-    const bodySha256 = crypto.createHmac('sha256', process.env.GITHUB_WEBHOOKS_SERCRET)
-      .update(request.rawBody)
-      .digest('hex');
-
-    if (sha256Signature === bodySha256) {
-      next();
-    } else {
-      throw new Unauthorized('Invalid signature');
-    }
-  } else {
-    throw new BadRequest('Missing signature');
-  }
+    webhooks.verify(request.body, signature)
+      .then(isVaid => {
+        if (!isVaid) next(new Unauthorized('Invalid signature'));
+      })
+      .finally(next);
+  };
 }
 
-export { githubIntegrityCheckMiddleware };
+export { createGithubIntegrityCheckMiddleware };
