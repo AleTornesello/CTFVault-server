@@ -1,3 +1,3 @@
-import * as githubRoutes from './githubRoutes';
+import { GithubRoutes } from './githubRoutes';
 
-export { githubRoutes }
+export { GithubRoutes };

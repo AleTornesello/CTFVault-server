@@ -1,4 +1,5 @@
 import PromisePool from '@supercharge/promise-pool';
+import { injectable } from 'tsyringe';
 
 import { getFilenameExtension } from '../helpers';
 import { SearchEngine, IndexingContent } from '../search-engine';
@@ -10,10 +11,14 @@ interface GithubFileContent extends IndexingContent {
     githubFilePath: string
 }
 
+@injectable()
 class GithubFileIndexing {
     private fileTypeExtensions: string[] = ['md'];
-    private repository = new GithubContentRepository();
-    private searchEngine = new SearchEngine();
+
+    constructor(
+        private repository: GithubContentRepository,
+        private searchEngine: SearchEngine) { }
+
 
     async updateIndex(owner: string, repo: string, files: { added: string[], modified: string[], removed: string[] }): Promise<void> {
         await Promise.all([

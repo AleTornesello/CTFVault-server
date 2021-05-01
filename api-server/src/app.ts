@@ -1,4 +1,4 @@
-import dotenv from "dotenv";
+import './config';
 import express from "express"
 import cors from "cors"
 import mongoose from "mongoose"
@@ -7,9 +7,6 @@ import { morganMiddleware } from './middlewares'
 import { notFoundMiddleware, logErrorMiddleware, errorHandlerMiddleware } from './errors';
 import Logger from "./helpers/logger"
 import * as routes from "./routes";
-
-// initialize configuration
-dotenv.config();
 
 // Mongodb
 const mongoUri = `mongodb+srv://${process.env.MONGODB_USER}:${process.env.MONGODB_PASSWD}@cluster0.qwrnf.mongodb.net/${process.env.MONGODB_DB}?retryWrites=true&w=majority`
