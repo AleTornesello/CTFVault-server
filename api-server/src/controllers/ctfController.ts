@@ -1,17 +1,23 @@
 import { Request, Response, NextFunction } from "express";
-
-import { CtfModel } from "../db/models";
+import { injectable } from "tsyringe";
 import { NotFound } from "http-errors"
 
+import { controller, action } from "../tsyringe-express";
+import { CtfModel } from "../db/models";
+
+@controller({ route: `/api/${process.env.API_VERSION}/ctfs` })
+@injectable()
 class CtfController {
 
-  async all(req: Request, res: Response) {
+  @action({ route: '/' })
+  async all(req: Request, res: Response): Promise<void> {
     CtfModel.find({}).select({ name: 1 }).exec().then((ctfs) => {
       return res.json(ctfs);
     });
   }
 
-  async get(req: Request, res: Response, next: NextFunction) {
+  @action({ route: '/:id' })
+  async get(req: Request, res: Response, next: NextFunction): Promise<void> {
     CtfModel.findById(req.params.id).exec().then((ctf) => {
       return res.json(ctf);
     }).catch(() => {
@@ -20,5 +26,4 @@ class CtfController {
   }
 }
 
-const ctfController = new CtfController();
-export default ctfController;
+export { CtfController };
