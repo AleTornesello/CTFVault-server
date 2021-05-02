@@ -9,6 +9,7 @@ services:
             - API_VERSION=v1
             - GITHUB_WEBHOOKS_SERCRET=${GITHUB_WEBHOOKS_SERCRET}
             - GITHUB_PERSONAL_ACCESS_TOKEN=${GITHUB_PERSONAL_ACCESS_TOKEN}
+            - ELASTIC_SEARCH_NODE=http://localhost:9200
     es01:
         image: docker.elastic.co/elasticsearch/elasticsearch:7.12.1
         container_name: es01
