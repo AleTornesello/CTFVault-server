@@ -22,7 +22,7 @@ export interface ControllerInfo {
 
 export interface ActionInfo {
     route: string,
-    httpMethod?: HttpMethod,
+    method?: HttpMethod,
     middlewares?: RequestHandler[]
 }
 
@@ -80,7 +80,7 @@ function attachActions(app: Application | Router, controllerRoute: string, contr
             const middlewares = actionInfo.middlewares ?? [];
             const action = actionHandler(controllerInstance, actionKey);
 
-            app[actionInfo.httpMethod ?? HttpMethod.GET].call(app, route, ...middlewares, action);
+            app[actionInfo.method ?? HttpMethod.GET].call(app, route, ...middlewares, action);
         }
     });
 }
