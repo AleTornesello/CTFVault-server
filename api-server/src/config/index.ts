@@ -3,8 +3,10 @@ import dotenv from "dotenv";
 dotenv.config();
 
 import "reflect-metadata";
-import { registerDependencies as registerGithubDependencies } from "../github/config";
+import { registerDependencies } from "./dependency-injection";
+import { configureElasticSearch } from "./elasticsearch";
 
 export const API_VERSION = process.env.API_VERSION;
 
-registerGithubDependencies();
+registerDependencies();
+configureElasticSearch();

@@ -1,5 +1,4 @@
 import { injectable } from 'tsyringe';
-import { singleton } from 'tsyringe';
 import { Application, Router } from "express";
 import { Webhooks } from '@octokit/webhooks';
 import { WebhookEventName, WebhookEvent, PushEvent } from '@octokit/webhooks-types';
