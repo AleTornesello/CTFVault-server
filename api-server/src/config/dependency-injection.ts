@@ -1,7 +1,6 @@
-import { GithubFileIndexing } from '../github/githubFileIndexing';
-import { container } from 'tsyringe';
+import { registerDependencies as registerGithubDependencies } from "../github/config";
 
 export function registerDependencies() {
-    return;
+    registerGithubDependencies();
 }
 
