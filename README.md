@@ -12,3 +12,7 @@ Upload writeup
 Update writeup
 
 ### GET /search?query= & category= & ....	
+
+## Architecture
+- WEB API for writeup uploading and searching
+- Different parser that upload writeups through API
