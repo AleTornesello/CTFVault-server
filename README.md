@@ -2,8 +2,13 @@
 Backend of CTFVault - a simple search-oriented CTF writeups container
 
 ## API
-`GET /writeups/{id}`	                       get writeup with id
-`POST /writeups`		                         upload writeup
-`PUT /writeups/{id}`	                       update writeup
+### GET /writeups/{id}
+Get writeup with id
 
-`GET /search?query= & category= & ....`	
+### POST /writeups
+Upload writeup
+
+### PUT /writeups/{id}
+Update writeup
+
+### GET /search?query= & category= & ....	
