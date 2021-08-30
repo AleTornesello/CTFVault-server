@@ -2,6 +2,14 @@ from typing import List, Dict
 
 from Models import Writeup
 
+dummy_data = Writeup(
+            'corCTF',
+            'aliceinwonderland',
+            'reverse',
+            'content',
+            'https://github.com/r00tstici/writeups/tree/master/corCTF_2021/AliceInCeptionland'
+        )
+
 class Database:
     """ Interface class for database interaction """
 
@@ -11,15 +19,17 @@ class Database:
 
     def get_writeup_from_id(self, id : int) -> Writeup:
         # Retrieve writeup from a given ID
-        pass
+        data = dummy_data
+        return data
 
     def query_writeups(
         self,
         query : str,
-        filters : [Dict, None]
+        filters : Dict
     ) -> List[Writeup]:
         # Retrieve writeups from query-terms and filters
-        pass
+        data = [dummy_data, dummy_data, dummy_data]
+        return data
 
     def add_writeup(self, writeup : Writeup) -> bool:
         # Add writeup to the database
