@@ -1,2 +1,3 @@
 .vscode/
 linux_env/
+flask-server/__pycache__
