@@ -1,3 +1,4 @@
+from typing import Dict
 
 class Writeup:
     """ Model for the writeup """
@@ -18,3 +19,11 @@ class Writeup:
 
     def __str__(self) -> str:
         return f'{self.challenge_name} from {self.contest_name}'
+
+    def to_json(self) -> Dict:
+        return {
+            "contest_name" : self.contest_name,
+            "challenge_name" : self.challenge_name,
+            "category" : self.category,
+            "source" : self.source
+        }
