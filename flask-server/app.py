@@ -22,7 +22,16 @@ def writeup_id(writeup_id : int):
 
 @app.route(f'{v1_prefix}/writeups', methods = ['POST'])
 def post_writeup():
-    return f'You uploaded a writeup'
+    if request.is_json:
+        data = request.json
+        try:
+            writeup = Writeup.from_json(data)
+            db.add_writeup(writeup)
+            return '', 201
+        except ValueError as err:
+            return 'Invalid json', 400
+
+    return 'No json data provided', 400
 
 
 @app.route(f'{v1_prefix}/search', methods = ['GET'])
